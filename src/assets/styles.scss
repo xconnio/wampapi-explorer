@@ -1,0 +1,6 @@
+@import 'highlight.js/styles/github.css';
+@import 'bootstrap/scss/bootstrap';
+
+.table-group-divider-forced {
+  border-top: calc(var(--bs-border-width) * 2) solid currentcolor !important;
+}
