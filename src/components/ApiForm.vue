@@ -113,6 +113,8 @@ const handleSubmit = async (event) => {
       </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Try it out!</button>
+    <button type="submit" class="btn btn-primary">
+      {{ props.record.type == 'procedure' ? 'Call' : 'Publish' }}
+    </button>
   </form>
 </template>
