@@ -1,4 +1,4 @@
-# xconn-python-api-explorer
+# wampapi-explorer
 
 ## Project Setup
 
