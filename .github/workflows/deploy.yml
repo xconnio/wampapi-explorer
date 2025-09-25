@@ -1,12 +1,10 @@
 name: Deploy to GitHub Pages
 
 on:
-  workflow_run:
-    workflows: ['CI']
-    types:
-      - completed
-    branches:
-      - deploy
+  push:
+    branches: [deploy]
+
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -18,23 +16,43 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+  build-static-assets:
+    runs-on: ubuntu-latest
 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.20
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build
+        run: yarn build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload static files as artifact
+        id: deployment
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+
+  deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
+    needs: build-static-assets
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download Pages Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: github-pages
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          run-id: ${{ github.event.workflow_run.id }}
-
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
