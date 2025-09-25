@@ -25,6 +25,7 @@ export function connectionArguments() {
     authid: search.get('authid'),
     schema: search.get('schema'),
     protocol: search.get('protocol'),
+    link: search.get('link'),
   }
 }
 

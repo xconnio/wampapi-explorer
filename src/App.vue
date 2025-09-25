@@ -16,8 +16,9 @@ const response = reactive({ schema: [] })
 const connArgs = connectionArguments()
 console.dir(connArgs)
 
-const routerUrl = ref('ws://localhost:8080/ws')
+const routerUrl = ref(connArgs.link || 'ws://localhost:8080/ws')
 const realmInput = ref(connArgs.realm || 'realm1')
+const schemaInput = ref(connArgs.schema || 'io.xconn.schema.get')
 
 const authTypeInput = ref(authenticationType(connArgs))
 const authIdInput = ref(connArgs.authid || '')
@@ -55,7 +56,7 @@ const handleSubmit = async () => {
       secret: secretInput.value,
     })
 
-    const result = await session.call(connArgs.schema || schema_procedure)
+    const result = await session.call(connArgs.schema || schemaInput.value)
 
     response.schema = result.args
   } catch (error) {
@@ -82,45 +83,66 @@ onMounted(async () => {
     <header>
       <nav class="navbar navbar-expand-lg bg-body-tertiarky">
         <div class="container-fluid justify-content-center">
-          <form
-            class="row row-cols-1 row-cols-lg-auto g-2 justify-content-center"
-            @submit.prevent="handleSubmit"
-          >
+          <form class="row g-2 justify-content-center" @submit.prevent="handleSubmit">
             <div class="col">
-              <input type="text" class="form-control me-2" v-model="routerUrl" />
-            </div>
-            <div class="col">
-              <input type="text" class="form-control me-2" v-model="realmInput" />
-            </div>
-            <div class="col">
-              <select class="form-control me-2" v-model="authTypeInput">
-                <option value="anonymous">Anonymous</option>
-                <option value="ticket">Ticket</option>
-                <option value="cra">CRA</option>
-                <option value="cryptosign">CryptoSign</option>
-              </select>
-            </div>
-            <div class="col">
-              <button class="btn btn-outline-success" type="submit">Explore</button>
-            </div>
-            <div class="w-100"></div>
-            <div class="col" v-if="authTypeInput !== 'anonymous'">
-              <input
-                type="text"
-                class="form-control me-2"
-                placeholder="authid"
-                required
-                v-model="authIdInput"
-              />
-            </div>
-            <div class="col" v-if="authTypeInput !== 'anonymous'">
-              <input
-                type="text"
-                class="form-control me-2"
-                :placeholder="secretPlaceholder"
-                required
-                v-model="secretInput"
-              />
+              <div class="row">
+                <div class="col">
+                  <input
+                    type="text"
+                    class="form-control me-2"
+                    v-model="routerUrl"
+                    placeholder="URL"
+                  />
+                </div>
+                <div class="col">
+                  <input
+                    type="text"
+                    class="form-control me-2"
+                    v-model="realmInput"
+                    placeholder="Realm"
+                  />
+                </div>
+                <div class="col">
+                  <input
+                    type="text"
+                    class="form-control me-2"
+                    v-model="schemaInput"
+                    placeholder="Schema URI"
+                  />
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <div class="col-3">
+                  <select class="form-control me-2" v-model="authTypeInput">
+                    <option value="anonymous">Anonymous</option>
+                    <option value="ticket">Ticket</option>
+                    <option value="cra">CRA</option>
+                    <option value="cryptosign">CryptoSign</option>
+                  </select>
+                </div>
+                <div class="col-3" v-show="authTypeInput !== 'anonymous'">
+                  <input
+                    type="text"
+                    class="form-control me-2"
+                    placeholder="authid"
+                    required
+                    v-model="authIdInput"
+                  />
+                </div>
+                <div class="col-3" v-show="authTypeInput !== 'anonymous'">
+                  <input
+                    type="text"
+                    class="form-control me-2"
+                    :placeholder="secretPlaceholder"
+                    required
+                    v-model="secretInput"
+                  />
+                </div>
+                <div class="col-3 ms-auto d-flex justify-content-end">
+                  <button class="col-12 btn btn-outline-success" type="submit">Explore</button>
+                </div>
+              </div>
             </div>
           </form>
         </div>

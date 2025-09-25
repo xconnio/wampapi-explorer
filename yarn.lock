@@ -1481,11 +1481,6 @@ cross-spawn@^7.0.6:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
-crypto-js@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.2.0.tgz#4d931639ecdfd12ff80e8186dba6af2c2e856631"
-  integrity sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==
-
 cssesc@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/cssesc/-/cssesc-3.0.0.tgz#37741919903b868565e1c09ea747445cd18983ee"
@@ -2887,13 +2882,12 @@ vue@^3.5.13:
     "@vue/server-renderer" "3.5.22"
     "@vue/shared" "3.5.22"
 
-"wampproto@github:xconnio/wampproto-ts#85e47a9d9421f9d3badc3225ff4b81dd300467ac":
+"wampproto@github:xconnio/wampproto-ts#2edd6144d24466ad8d64ea1dd5e2e80de86bac56":
   version "0.1.0"
-  resolved "https://codeload.github.com/xconnio/wampproto-ts/tar.gz/85e47a9d9421f9d3badc3225ff4b81dd300467ac"
+  resolved "https://codeload.github.com/xconnio/wampproto-ts/tar.gz/2edd6144d24466ad8d64ea1dd5e2e80de86bac56"
   dependencies:
     buffer "^6.0.3"
     cbor-x "^1.5.9"
-    crypto-js "^4.2.0"
     msgpackr "^1.10.2"
     tweetnacl "^1.0.3"
     typescript "^5.4.5"
@@ -2929,12 +2923,12 @@ wsl-utils@^0.1.0:
   dependencies:
     is-wsl "^3.1.0"
 
-"xconn@https://github.com/xconnio/xconn-ts.git#b121f653b41eaf99902c2326592a39f66e06554a":
+"xconn@https://github.com/xconnio/xconn-ts.git#0ab4ff8d89353cfa73dedf991da1940eef24076f":
   version "0.1.0"
-  resolved "https://github.com/xconnio/xconn-ts.git#b121f653b41eaf99902c2326592a39f66e06554a"
+  resolved "https://github.com/xconnio/xconn-ts.git#0ab4ff8d89353cfa73dedf991da1940eef24076f"
   dependencies:
     typescript "^5.5.3"
-    wampproto "github:xconnio/wampproto-ts#85e47a9d9421f9d3badc3225ff4b81dd300467ac"
+    wampproto "github:xconnio/wampproto-ts#2edd6144d24466ad8d64ea1dd5e2e80de86bac56"
     ws "^8.18.0"
 
 xml-name-validator@^4.0.0:
