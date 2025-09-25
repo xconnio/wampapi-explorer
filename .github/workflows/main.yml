@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main, deploy]
+    branches: [main]
   pull_request:
-    branches: [main, deploy]
+    branches: [main]
 
 jobs:
   build:
@@ -28,9 +28,3 @@ jobs:
 
       - name: Build
         run: yarn build
-
-      - name: Upload static files as artifact
-        id: deployment
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: dist
