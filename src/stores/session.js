@@ -3,7 +3,7 @@ import { Client, connectAnonymous, connectTicket, connectCRA, connectCryptosign 
 
 export const useSessionStore = defineStore('session', {
   state: () => ({
-    client: new Client(),
+    // client: new Client(),
     session: null,
   }),
   actions: {
