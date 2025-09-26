@@ -10,6 +10,7 @@ export default defineConfig({
   optimizeDeps: {
     include: ['lodash'],
   },
+  base: '/wampapi-explorer/',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
