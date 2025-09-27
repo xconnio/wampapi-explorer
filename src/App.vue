@@ -16,13 +16,13 @@ const response = reactive({ schema: [] })
 const connArgs = connectionArguments()
 console.dir(connArgs)
 
-const routerUrl = ref(connArgs.link || 'ws://localhost:8080/ws')
-const realmInput = ref(connArgs.realm || 'realm1')
-const schemaInput = ref(connArgs.schema || 'io.xconn.schema.get')
+const routerUrl = ref(connArgs.url)
+const realmInput = ref(connArgs.realm)
+const schemaInput = ref(connArgs.schema)
 
 const authTypeInput = ref(authenticationType(connArgs))
-const authIdInput = ref(connArgs.authid || '')
-const secretInput = ref(authenticationSecret() || '')
+const authIdInput = ref(connArgs.authid)
+const secretInput = ref(authenticationSecret())
 const alertRef = ref()
 
 const secretPlaceholder = computed(() => {
@@ -46,7 +46,6 @@ const handleSubmit = async () => {
   const url = parseURL(routerUrl.value)
   routerUrl.value = url.toString()
 
-  const schema_procedure = 'io.xconn.schema.get'
   try {
     const session = await store.getSession({
       url,
@@ -62,7 +61,7 @@ const handleSubmit = async () => {
   } catch (error) {
     if (error.toString() === '[object Event]') alertRef.value = 'Connection error'
     else if (error.toString() === 'wamp.error.no_such_procedure')
-      alertRef.value = `${error}: (${schema_procedure})`
+      alertRef.value = `${error}: (${schemaInput.value})`
     else alertRef.value = error
     console.error('Error: ', error)
   }
@@ -74,11 +73,17 @@ const handleSubmit = async () => {
 }
 
 onMounted(async () => {
-  await handleSubmit()
+  // await handleSubmit()
 })
 </script>
 
 <template>
+  <header class="text-white py-3 sticky-top mb-3" style="background-color: rgb(64, 81, 181)">
+    <!-- Inner container gives left/right padding like the rest of the site -->
+    <div class="container">
+      <h1 class="h5 m-0">WAMP API Explorer</h1>
+    </div>
+  </header>
   <div class="container">
     <header>
       <nav class="navbar navbar-expand-lg bg-body-tertiarky">
@@ -92,6 +97,7 @@ onMounted(async () => {
                     class="form-control me-2"
                     v-model="routerUrl"
                     placeholder="URL"
+                    required
                   />
                 </div>
                 <div class="col">
@@ -100,6 +106,7 @@ onMounted(async () => {
                     class="form-control me-2"
                     v-model="realmInput"
                     placeholder="Realm"
+                    required
                   />
                 </div>
                 <div class="col">
@@ -108,6 +115,7 @@ onMounted(async () => {
                     class="form-control me-2"
                     v-model="schemaInput"
                     placeholder="Schema URI"
+                    required
                   />
                 </div>
               </div>
