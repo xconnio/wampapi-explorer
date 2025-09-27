@@ -66,7 +66,7 @@ function fieldPath(field) {
           :required="state.requiredFields.includes(field)"
         />
       </td>
-      <td>{{ state.uri }}</td>
+      <td></td>
       <td class="pt-3">{{ value.type }}</td>
     </tr>
   </template>
