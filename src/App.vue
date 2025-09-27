@@ -122,7 +122,7 @@ onMounted(async () => {
               <br />
               <div class="row">
                 <div class="col-3">
-                  <select class="form-control me-2" v-model="authTypeInput">
+                  <select class="form-select me-2" v-model="authTypeInput">
                     <option value="anonymous">Anonymous</option>
                     <option value="ticket">Ticket</option>
                     <option value="cra">CRA</option>
