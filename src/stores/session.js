@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia'
-import { Client, connectAnonymous, connectTicket, connectCRA, connectCryptosign } from 'xconn'
+import { connectAnonymous, connectTicket, connectCRA, connectCryptosign } from 'xconn'
 
 export const useSessionStore = defineStore('session', {
   state: () => ({
     // client: new Client(),
     session: null,
+    apis: [],
+    connectionError: null,
   }),
   actions: {
     async getSession({
@@ -29,6 +31,11 @@ export const useSessionStore = defineStore('session', {
       }
 
       return this.session
+    },
+
+    async callSchema(session, schema) {
+      const result = await session.call(schema)
+      this.apis = result.args
     },
   },
 })
