@@ -30,8 +30,6 @@ const createArgsKwargs = () => {
   if (!isEmpty(args)) result['args'] = args
   if (!isEmpty(kwargs)) result['kwargs'] = kwargs
 
-  console.log('Result', result)
-
   return result
 }
 
@@ -44,6 +42,14 @@ function getFieldValue(path) {
 }
 
 const filterResponse = pipe(defaultTo({}), reject(isEmpty))
+
+function stringifyWithBigInt(obj) {
+  return JSON.stringify(
+    obj,
+    (_, value) => (typeof value === 'bigint' ? value.toString() + 'n' : value),
+    2,
+  )
+}
 
 const handleSubmit = async (event) => {
   const form = event.target
@@ -60,12 +66,12 @@ const handleSubmit = async (event) => {
 
     if (type === 'procedure') {
       const response = await session.call(uri, createArgsKwargs())
-      state.callResponse = hljs.highlight(JSON.stringify(filterResponse(response), null, 2), {
+      state.callResponse = hljs.highlight(stringifyWithBigInt(filterResponse(response), null, 2), {
         language: 'json',
       }).value
     } else if (type === 'topic') {
       const response = await session.publish(uri, createArgsKwargs())
-      state.callResponse = hljs.highlight(JSON.stringify(filterResponse(response), null, 2), {
+      state.callResponse = hljs.highlight(stringifyWithBigInt(filterResponse(response), null, 2), {
         language: 'json',
       }).value
     }
