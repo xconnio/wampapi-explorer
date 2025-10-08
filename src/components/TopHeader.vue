@@ -12,7 +12,6 @@ import { useSessionStore } from '../stores/session'
 const store = useSessionStore()
 
 const connArgs = connectionArguments()
-console.dir(connArgs)
 
 const routerUrl = ref(connArgs.url)
 const realmInput = ref(connArgs.realm)
@@ -62,7 +61,6 @@ const handleSubmit = async () => {
     else if (error.toString() === 'wamp.error.no_such_procedure')
       store.connectionError = `${error}: (${schemaInput.value})`
     else store.connectionError = error
-    console.error('Error: ', error)
   }
 
   await nextTick(async () => {

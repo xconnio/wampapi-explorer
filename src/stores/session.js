@@ -16,7 +16,6 @@ export const useSessionStore = defineStore('session', {
       authId = '',
       secret = '',
     }) {
-      console.log(url.toString(), realm, authMethod, authId, secret)
       const uri = url.toString()
 
       if (authMethod === 'ticket') {
@@ -27,7 +26,6 @@ export const useSessionStore = defineStore('session', {
         this.session = connectCryptosign(uri, realm, authId, secret)
       } else {
         this.session = connectAnonymous(uri, realm)
-        console.log('Anonymous')
       }
 
       return this.session
