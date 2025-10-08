@@ -46,7 +46,7 @@ const filterResponse = pipe(defaultTo({}), reject(isEmpty))
 function stringifyWithBigInt(obj) {
   return JSON.stringify(
     obj,
-    (_, value) => (typeof value === 'bigint' ? value.toString() + 'n' : value),
+    (_, value) => (typeof value === 'bigint' ? value.toString() : value),
     2,
   )
 }
